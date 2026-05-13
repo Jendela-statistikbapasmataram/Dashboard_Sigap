@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistik Kedisiplinan - Bapas Mataram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
+            color: white;
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 77, 77, 0.4);
+            box-shadow: 0 0 30px rgba(255, 77, 77, 0.1);
+        }
+        .text-accent { color: #ff4d4d; }
+        .bg-accent { background-color: #ff4d4d; }
+        
+        .custom-table th {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: #888;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .custom-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tighter uppercase italic">
+                    Monitoring <span class="text-accent">Keterlambatan</span>
+                </h1>
+                <p class="text-gray-400 text-sm">Periode Bulan Mei 2026 • Bapas Kelas I Mataram</p>
+            </div>
+            <div class="flex gap-3">
+                <!-- Link Google Drive -->
+                <a href="https://docs.google.com/spreadsheets/d/1NAWbV6bXIB_Rh_QwJIHd1wuBV0i_PMj2LCOCH8xGDyY/edit?gid=2093049647#gid=2093049647" target="_blank" class="px-6 py-2 bg-blue-600/20 border border-blue-500/50 rounded-full hover:bg-blue-600 hover:text-white transition flex items-center gap-2 text-sm uppercase font-semibold">
+                    <i class="fab fa-google-drive"></i> Sumber Data
+                </a>
+                <a href="javascript:history.back()" class="px-6 py-2 bg-white/5 border border-white/10 rounded-full hover:bg-white hover:text-black transition flex items-center gap-2 text-sm uppercase font-semibold">
+                    <i class="fas fa-arrow-left"></i> Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Kolom Kiri -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Rata-rata & Kedisiplinan (Tetap) -->
+                <div class="glass-card p-6">
+                    <p class="text-gray-400 text-xs uppercase mb-1">Update Jumlah ASN Terlambat sampai hari ini</p>
+                    <h2 class="text-4xl font-bold">3<span class="text-sm font-normal opacity-67"> (Orang)</span></h2>
+                    <div class="w-full bg-white/10 h-1.5 mt-4 rounded-full overflow-hidden">
+                        <div class="bg-accent h-full" style="width: 3%"></div>
+                    </div>
+                </div>
+
+                <!-- NEW SECTION: Jumlah ASN Terlambat Per Bagian -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xs font-semibold mb-4 border-b border-white/10 pb-2 uppercase tracking-widest italic">ASN Terlambat Per Bagian sampai saat ini</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="text-center p-2 rounded-xl bg-white/5 border border-white/5">
+                            <p class="text-[10px] text-gray-400 uppercase">TU</p>
+                            <p class="text-xl font-bold">0</p>
+                        </div>
+                        <div class="text-center p-2 rounded-xl bg-white/5 border border-white/5">
+                            <p class="text-[10px] text-gray-400 uppercase">BKD</p>
+                            <p class="text-xl font-bold text-accent">2</p>
+                        </div>
+                        <div class="text-center p-2 rounded-xl bg-white/5 border border-white/5">
+                            <p class="text-[10px] text-gray-400 uppercase">BKA</p>
+                            <p class="text-xl font-bold">1</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <p class="text-gray-400 text-xs uppercase mb-1">Tingkat Kedisiplinan</p>
+                    <h2 class="text-4xl font-bold text-green-400">96 <span class="font-normal opacity-50 text-white">%</span></h2>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-sm font-semibold mb-4 border-b border-white/10 pb-2 uppercase italic">Keterangan tidak hadir</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-green-500"></div>  Cuti</span>
+                            <span class="font-bold">9 Pegawai</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-yellow-500"></div> Sakit</span>
+                            <span class="font-bold">4 Pegawai</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-red-500"></div>  Terlambat</span>
+                            <span class="font-bold">3  Pegawai</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts & Table (Right) - Tetap -->
+            <div class="lg:col-span-8 space-y-6">
+                <div class="glass-card p-8">
+                    <h2 class="text-lg font-bold mb-6 italic uppercase">Tren Mingguan <span class="text-accent text-xs not-italic font-normal ml-2 opacity-60">(Jumlah ASN Terakumulasi)</span></h2>
+                    <div class="h-64">
+                        <canvas id="delayTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden">
+                    <div class="p-6 border-b border-white/10 flex justify-between items-center">
+                        <h2 class="font-bold italic uppercase tracking-wider">Top <span class="text-accent">Presensi</span> Terlambat</h2>
+                        <span class="text-[10px] px-3 py-1 bg-white/5 rounded-full text-gray-400">Minggu Ini</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full custom-table text-sm text-left">
+                            <thead>
+                                <tr>
+                                    <th>Pegawai</th>
+                                    <th>Frekuensi terlambat</th>
+                                    <th>Eselon IV</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-semibold">URBAN MURDANIL, S.Tr.Pas</td>
+                                    <td>1 Kali</td>
+                                    <td>BKD</td>
+                                    <td><span class="px-2 py-0.5 bg-blue-500/20 text-blue-500 text-[10px] rounded">Evaluasi</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold">NOVA TIKA UDAYANI, S.H.</td>
+                                    <td>1 Kali</td>
+                                    <td>BKA</td>
+                                    <<td><span class="px-2 py-0.5 bg-blue-500/20 text-blue-500 text-[10px] rounded">Evaluasi</span></td>
+                                </tr>
+                                <td class="font-semibold">AGUS JURAEMI</td>
+                                    <td>1 Kali</td>
+                                    <td>BKD</td>
+                                    <<td><span class="px-2 py-0.5 bg-blue-500/20 text-blue-500 text-[10px] rounded">Evaluasi</span></td>
+                                <tr>
+                                    <td class="font-semibold">-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        Chart.defaults.color = 'rgba(255,255,255,0.5)';
+        Chart.defaults.font.family = 'Segoe UI';
+
+        const ctx = document.getElementById('delayTrendChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, '#ff4d4d');
+        gradient.addColorStop(1, 'rgba(255, 77, 77, 0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
+                datasets: [{
+                    label: 'Total Keterlambatan (Jumlah ASN)',
+                    data: [1, 1, 0, 1, 0],
+                    borderColor: '#ff4d4d',
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#ff4d4d',
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
