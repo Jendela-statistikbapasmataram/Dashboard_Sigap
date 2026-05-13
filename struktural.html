@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struktur Organisasi Bapas Mataram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS UNTUK BACKGROUND FOTO */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            /* Ganti 'backgroundstruktural.png' dengan nama file foto Anda */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('backgroundstruktural.png'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+        .profile-card {
+            background-color: rgba(38, 38, 38, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100%;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(50, 50, 50, 0.95);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid rgba(243, 244, 246, 0.8);
+            margin-top: -60px;
+            background-color: #d1d5db;
+        }
+
+        .btn-kembali {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-kembali:hover {
+            background-color: white;
+            color: #1a1a1a;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-10">
+
+    <!-- Container Utama -->
+    <div class="container mx-auto content-wrapper">
+        <h1 class="text-3xl md:text-5xl font-bold text-center mb-24 text-white uppercase tracking-widest drop-shadow-2xl">
+            Struktural Bapas Kelas I Mataram
+        </h1>
+        
+        <div id="profile-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-20">
+            <!-- Kartu di-render oleh JS -->
+        </div>
+
+        <div class="flex justify-center mt-20 mb-10">
+            <a href="javascript:history.back()" class="btn-kembali shadow-xl">
+                <i class="fas fa-chevron-left"></i> Kembali
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const teamData = [
+            { name: "MADE KERTAYASA.,S.Sos.", img: "I Made Kertayasa.png", nip: "1969123119920310031", jabatan: "Kasubag Tata Usaha", pangkat: "Penata Tk.I (III/d)" },
+            { name: "SELAMAT RIADI, S.H.", img: "Selamat.png", nip: "197912312007031000", jabatan: "Kasi BKD", pangkat: "Penata Tk.I (III/d)" },
+            { name: "ROMANA MARIA, S,Pd.", img: "Romana.jpg", nip: "197108091992032001", jabatan: "Kasi BKA", pangkat: "Penata Tk.I (III/d)" },
+            { name: "INDRIAWATI,S.H.,M.M.", img: "Indriawati.png", nip: "197307231993032000", jabatan: "Kaur Keuangan", pangkat: "Pembina (IV/a)" },
+            { name: "PURWANTO,S.H.", img: "Purwanto.png", nip: "197003251990031000", jabatan: "Ka Subsi Bimker Klien Dewasa", pangkat: "Penata Tk.I (III/d)" },
+            { name: "MA`RUF", img: "Maruf.png", nip: "197910012001121001", jabatan: "Ka Subsi Bimker Klien Anak", pangkat: "Penata Muda Tk.I (III/b)" },
+            { name: "MASNIAR DAHLIA,S.H.", img: "Liya.png", nip: "198510282005012001", jabatan: "Kaur Umum", pangkat: "Penata Muda Tk.I (III/b)" },
+            { name: "RAJA ADIL ARDIANSYAH SORMIN,S.H.", img: "Ucok.png", nip: "197812022003121002", jabatan: "Ka Subsi BKD", pangkat: "Penata Tk.I (III/d)" },
+            { name: "MOH. ZAINUL AHZAN.S.PdI.", img: "ahzan.png", nip: "198401292010121001", jabatan: "Ka Subsi BKA", pangkat: "Penata (III/c)" },
+            { name: "LEO PUTRA CAHYA,S.E.", img: "leo.png", nip: "199008142012121001", jabatan: "Kaur Kepegawaian", pangkat: "Penata Muda (III/b)" },
+            { name: "FAOZIAH,S.H.", img: "zee.png", nip: "199109212010122001", jabatan: "Ka Subsi Registrasi Klien Dewasa", pangkat: "Penata (III/c)" },
+            { name: "LISA FARADEBI HERNANI, S.Tr.Pas.", img: "lisa.png", nip: "199806082023012001", jabatan: "Ka Subsi Registrasi Klien Anak", pangkat: "Penata Muda (III/a)" }
+        ];
+
+        const grid = document.getElementById('profile-grid');
+
+        teamData.forEach(person => {
+            grid.innerHTML += `
+                <div class="profile-card flex flex-col items-center p-6 text-center shadow-2xl">
+                    <img src="${person.img}" alt="${person.name}" class="profile-image shadow-lg">
+                    <h2 class="text-white font-bold text-lg mt-4 mb-4 tracking-normal leading-tight h-12 flex items-center justify-center">
+                        ${person.name}
+                    </h2>
+                    <div class="text-gray-300 text-xs italic leading-relaxed relative px-4 pb-4">
+                        <span class="text-2xl font-serif absolute -left-1 -top-2 text-gray-500 opacity-40">"</span>
+                        <p class="mb-1 text-[10px]">NIP : ${person.nip}</p>
+                        <p class="mb-1">
+                            <span>Jabatan : </span>
+                            <span class="font-bold text-white">${person.jabatan}</span>
+                        </p>
+                        <p>Pangkat : ${person.pangkat}.</p>
+                        <span class="text-2xl font-serif absolute -right-1 bottom-0 text-gray-500 opacity-40">"</span>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
