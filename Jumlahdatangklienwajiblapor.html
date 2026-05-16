@@ -280,6 +280,15 @@
                         <div class="chart-container" style="height: 300px;"><canvas id="chartAnakPie"></canvas></div>
                     </div>
                 </div>
+
+                <!-- GRAFIK GARIS TREN BULANAN (SIMETRIS DI BAWAH) -->
+                <div class="category-box full-width">
+                    <h2 class="category-title" style="color: #fff;">Tren Kedatangan Wajib Lapor Bulanan</h2>
+                    <span class="label-stats" style="text-align: center; display: block;">Statistik Jumlah Klien Dewasa & Anak Datang Wajib Lapor Selama 1 Tahun</span>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="chartTrenLine"></canvas>
+                    </div>
+                </div>
             </div>
 
             <!-- KARTU INFO UPDATE (BAWAH & TENGAH) -->
@@ -385,6 +394,50 @@
                     datasets: [{ data: [pbA, cbA], backgroundColor: ['#2ecc71', '#27ae60'], borderWidth: 0 }]
                 },
                 options: { ...commonOptions, plugins: { legend: { display: true, labels: { color: '#fff' } } } }
+            });
+
+            // --- INISIALISASI GRAFIK GARIS BARU (TREN BULANAN) ---
+            charts.trenLine = new Chart(document.getElementById('chartTrenLine'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                    datasets: [
+                        {
+                            label: 'Klien Dewasa',
+                            data: [0, 0, 0, 0, 41, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            borderColor: '#00d2ff',
+                            backgroundColor: 'rgba(0, 210, 255, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            pointBackgroundColor: '#00d2ff',
+                            fill: true
+                        },
+                        {
+                            label: 'Klien Anak',
+                            data: [0, 0, 0, 0, 3, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            borderColor: '#2ecc71',
+                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            pointBackgroundColor: '#2ecc71',
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    ...commonOptions,
+                    plugins: { 
+                        legend: { 
+                            display: true, 
+                            position: 'top',
+                            labels: { color: '#fff', font: { family: 'Poppins' } } 
+                        } 
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#fff' } }
+                    }
+                }
             });
         }
 

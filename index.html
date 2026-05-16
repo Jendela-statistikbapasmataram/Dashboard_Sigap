@@ -17,9 +17,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Background Radial Gradient sesuai image_2ad21e.png */
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
+            
+            /* --- UPDATE BACKGROUND: Menggabungkan Gambar & Gradien agar Smooth & Elegan --- */
+            background: 
+                radial-gradient(circle at center, rgba(26, 26, 46, 0.85) 0%, rgba(10, 10, 10, 0.95) 100%),
+                url('Backroundutama.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             background-attachment: fixed;
+            background-blend-mode: multiply; /* Menyatukan gambar dengan warna gelap dashboard */
+            
             color: rgb(255, 255, 255);
         }
 
@@ -27,7 +35,7 @@
         .profile-section {
             text-align: center;
             margin-bottom: 50px;
-            animation: fadeIn down 1s ease-out;
+            animation: fadeInDown 1s ease-out; /* Perbaikan nama animasi agar sesuai dengan keyframes */
         }
 
         .profile-img {
@@ -80,12 +88,6 @@
             min-width: 280px;
         }
 
-        .stat-card:hover {
-            transform: translateY(-10px);
-            background: rgba(162, 155, 254, 0.1);
-            border-color: rgba(162, 155, 254, 0.4);
-        }
-
         .stat-title {
             color: #95a5a6;
             font-size: 0.7rem;
@@ -99,9 +101,9 @@
             font-weight: 800;
             margin: 10px 0;
             background: linear-gradient(45deg, #ffffff, #a29bfe);
-            /* Tambahkan baris standar di bawahnya */
--webkit-background-clip: text;
-background-clip: text;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent; /* Memastikan gradien warna teks berfungsi sempurna */
         }
 
         .stat-change {
@@ -110,13 +112,9 @@ background-clip: text;
             font-weight: 600;
         }
 
-        /* Menyesuaikan baris kedua agar simetris (2 kartu di tengah) */
-        
-
         /* Responsivitas */
         @media (max-width: 900px) {
-            .stats-container { grid-template-columns: repeat(2, 1fr); }
-            .stat-card:nth-child(4), .stat-card:nth-child(5) { grid-column: auto; margin-left: 0; }
+            .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); }
             .profile-name { font-size: 1.8rem; }
         }
 
@@ -127,19 +125,22 @@ background-clip: text;
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
-        } /* Copy dan letakkan di baris 130 */
-.sigap-tagline {
-    font-size: 15px;
-    color: #cbd5e1;
-    margin: 8px 0;
-}
+        }
 
-.sigap-tagline .letter {
-    color: #88ee66; /* Warna biru cerah untuk inisial */
-    font-weight: 800;
-    font-size: 17px;
-    text-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
-}/* --- Efek Klik dan Hover Baru --- */
+        .sigap-tagline {
+            font-size: 15px;
+            color: #cbd5e1;
+            margin: 8px 0;
+        }
+
+        .sigap-tagline .letter {
+            color: #88ee66; /* Warna hijau cerah untuk inisial */
+            font-weight: 800;
+            font-size: 17px;
+            text-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
+        }
+
+        /* --- Efek Klik dan Hover --- */
         .stat-card:hover {
             transform: translateY(-10px) scale(1.02);
             background: rgba(162, 155, 254, 0.15);
@@ -167,39 +168,33 @@ background-clip: text;
 </head>
 <body>
 
-   <!-- Bagian Profil Berdasarkan image_2ad21e.png -->
-<div class="profile-section">
-    <img src="Aweng.jpg" alt="Foto Profil" class="profile-img">
-    
-    <!-- Warna SIGAP di sini akan mengikuti class .profile-name di CSS -->
-    <h1 class="profile-name">SIGAP, <span>BAPAS MATARAM</span></h1>
-    
-    <!-- Tagline Akronim -->
-    <p class="sigap-tagline">
-        <span class="letter">S</span>tatistik 
-        <span class="letter">I</span>nformasi dalam 
-        <span class="letter">G</span>engg<span class="letter">A</span>man 
-        <span class="letter">P</span>raktis
-    </p>
-
-    <!-- Deskripsi Tambahan -->
-    <div class="sigap-description">
-        <p>
-            Satu Genggaman, Informasi statistik tersaji. Selamat datang di Dashboard <strong>SIGAP</strong>,
-            Fokus kami adalah menghadirkan data statistik yang tidak hanya bermanfaat untuk monitoring pelaporan internal, 
-            namun memudahkan pengguna untuk melihat informasi data statistik yang praktis dan akurat — semuanya dalam satu genggaman.
+    <div class="profile-section">
+        <img src="Aweng.jpg" alt="Foto Profil" class="profile-img">
+        
+        <h1 class="profile-name">SIGAP, <span>BAPAS MATARAM</span></h1>
+        
+        <p class="sigap-tagline">
+            <span class="letter">S</span>tatistik 
+            <span class="letter">I</span>nformasi dalam 
+            <span class="letter">G</span>engg<span class="letter">A</span>man 
+            <span class="letter">P</span>raktis
         </p>
-</div>
+
+        <div class="sigap-description">
+            <p>
+                Satu Genggaman, Informasi statistik tersaji. Selamat datang di Dashboard <strong>SIGAP</strong>,
+                Fokus kami adalah menghadirkan data statistik yang tidak hanya bermanfaat untuk monitoring pelaporan internal, 
+                namun memudahkan pengguna untuk melihat informasi data statistik yang praktis dan akurat — semuanya dalam satu genggaman.
+            </p>
+        </div>
         <p class="profile-role">Lalu Awang Wihartana - Statistisi Ahli Pertama</p>
     </div>
 
-    <!-- Bagian Statistik 2 Baris -->
     <div class="stats-container">
-        <!-- Baris 1 -->
         <div class="stat-card" onclick="window.location.href='datastatistikasn.html'">
             <div class="stat-title">Data Statistik ASN</div>
             <div class="stat-value">67</div>
-            <div class="stat-change">▲ 8% dari bulan lalu</div>
+            <div class="stat-change">▲ 7% dari tahun lalu</div>
         </div>
 
         <div class="stat-card" onclick="window.location.href='kedisiplinanasn.html'">
@@ -214,39 +209,49 @@ background-clip: text;
             <div class="stat-change">▲ 85% Efisiensi</div>
         </div>
 
-        <!-- Baris 2 -->
         <div class="stat-card" onclick="window.location.href='Jumlahdatangklienwajiblapor.html'">
             <div class="stat-title">Wajib Lapor Klien di Bapas Mataram</div>
             <div class="stat-value">56 Klien</div>
             <div class="stat-change">Data Bulan Mei</div>
         </div>
         
-        <div class="stat-card" onclick="window.location.href='penyelesaianlitmas.html'">
-            <div class="stat-title">Penyelesaian Litmas</div>
+        <div class="stat-card" onclick="window.location.href='wajiblaporloteng.html'">
+            <div class="stat-title">Wajib Lapor Klien di Pos Loteng</div>
             <div class="stat-value">Segera diluncurkan</div>
-            <div class="stat-change">▲ 54 user hari ini</div>
+            <div class="stat-change">Data Bulan Mei</div>
+        </div>
+
+        <div class="stat-card" onclick="window.location.href='wajiblaporlotim.html'">
+            <div class="stat-title">Wajib Lapor Klien di Pos Lotim</div>
+            <div class="stat-value">Segera diluncurkan</div>
+            <div class="stat-change">Data Bulan Mei</div>
+        </div>
+
+        <div class="stat-card" onclick="window.location.href='peneyelesaianlitmas.html'">
+            <div class="stat-title">Monitoring Penyelesaian Litmas</div>
+            <div class="stat-value">Segera diluncurkan</div>
+            <div class="stat-change">Data Bulan Mei</div>
         </div>
     </div>
-<a href="lihatkegiatanlengkapnya.html" class="stat-card" style="cursor: pointer; text-decoration: none; display: block;">
-    <div class="stat-title">Kunjungi Sosial Media Kami</div>
-    <div class="stat-value">➔</div>
-    <div class="stat-change">Statistik Kinerja Sosial Media Bapas</div>
-</a>
 
-<!-- Tombol Navigasi Tambahan -->
+    <a href="lihatkegiatanlengkapnya.html" class="stat-card" style="cursor: pointer; text-decoration: none; display: block; margin-top: 25px; width: 100%; max-width: 1100px;">
+        <div class="stat-title">Kunjungi Sosial Media Kami</div>
+        <div class="stat-value" style="-webkit-text-fill-color: initial; color: #ffffff;">➔</div>
+        <div class="stat-change">Statistik Kinerja Sosial Media Bapas</div>
+    </a>
+
     <div style="margin-top: 50px; text-align: center;">
         <a href="index.html" style="text-decoration: none; color: #b3b3b3; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 30px; transition: 0.3s;" onmouseover="this.style.borderColor='#a29bfe'; this.style.color='#a29bfe'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.color='#b3b3b3'">
             ← Kembali ke Beranda
         </a>
     </div>
-<script>
+
+    <script>
         document.querySelectorAll('.stat-card').forEach(card => {
             card.addEventListener('mousedown', function (e) {
-                // Membuat elemen lingkaran untuk efek klik (ripple)
                 let ripple = document.createElement('span');
                 ripple.classList.add('ripple');
                 
-                // Mengatur posisi ripple berdasarkan klik
                 const rect = this.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
                 
@@ -268,4 +273,4 @@ background-clip: text;
         });
     </script>
 </body>
-</html>>
+</html>
