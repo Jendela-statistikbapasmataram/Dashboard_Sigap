@@ -118,11 +118,11 @@
 
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <div class="glass-card p-8 rounded-3xl">
                 <h2 class="text-xl font-bold mb-6 italic flex items-center gap-2">
                     <span class="w-2 h-8 bg-blue-500 rounded-full"></span>
-                    Pemanfaatan Berdasarkan Jabatan
+                    Pemanfaatan BMN Berdasarkan Jenis Jabatan
                 </h2>
                 <div class="chart-container">
                     <canvas id="deptChart"></canvas>
@@ -132,10 +132,23 @@
             <div class="glass-card p-8 rounded-3xl">
                 <h2 class="text-xl font-bold mb-6 italic flex items-center gap-2">
                     <span class="w-2 h-8 bg-green-500 rounded-full"></span>
-                    Status Eselon IV
+                    Pemanfaatan BMN Berdasarkan Tingkat Eselon Jabatan
                 </h2>
                 <div class="chart-container">
                     <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- PERUBAHAN: Penambahan Grafik Garis Baru yang Simetris di Bagian Bawah -->
+        <div class="grid grid-cols-1 gap-8 mb-16">
+            <div class="glass-card p-8 rounded-3xl">
+                <h2 class="text-xl font-bold mb-6 italic flex items-center gap-2">
+                    <span class="w-2 h-8 bg-red-500 rounded-full"></span>
+                    Jumlah Unit BMN kondisi Rusak yang telah dilakukan penghapusan Melalui sistem Lelang bersama KPKNL MATARAM
+                </h2>
+                <div class="chart-container">
+                    <canvas id="lelangChart"></canvas>
                 </div>
             </div>
         </div>
@@ -163,9 +176,9 @@
         new Chart(ctxDept, {
             type: 'bar',
             data: {
-                labels: ['Struktural', 'JFT', 'JFU'],
+                labels: ['Struktural', 'JFT', 'JFU', 'Tidak digunakan'],
                 datasets: [{
-                    data: [8, 21, 1],
+                    data: [8, 21, 1, 6],
                     backgroundColor: gradBlue,
                     borderRadius: 8,
                     borderWidth: 0
@@ -187,10 +200,10 @@
         new Chart(ctxStatus, {
             type: 'doughnut',
             data: {
-                labels: ['TU', 'BKD', 'BKA'],
+                labels: ['TU', 'BKD', 'BKA', 'Tidakdigunakan'],
                 datasets: [{
-                    data: [9, 10, 8],
-                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                    data: [9, 10, 8, 6],
+                    backgroundColor: ['#10b981', '#f59e0b', '#ffffff', '#ef4444' ],
                     hoverOffset: 15,
                     borderWidth: 0
                 }]
@@ -200,6 +213,47 @@
                 maintainAspectRatio: false,
                 cutout: '75%',
                 plugins: { legend: { position: 'bottom', labels: { padding: 20 } } }
+            }
+        });
+
+        // PERUBAHAN: Inisialisasi Chart 3 (Line Chart Lelang)
+        const ctxLelang = document.getElementById('lelangChart').getContext('2d');
+        const gradRed = ctxLelang.createLinearGradient(0, 0, 0, 300);
+        gradRed.addColorStop(0, 'rgba(239, 68, 68, 0.5)');
+        gradRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+
+        new Chart(ctxLelang, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025'], // 6 tahun terakhir
+                datasets: [{
+                    label: 'Jumlah BMN Dihapus (Unit)',
+                    data: [ 1, 126, 112, 105, 72, 0], // Dummy data trend, silakan sesuaikan angkanya jika diperlukan
+                    borderColor: '#ef4444',
+                    backgroundColor: gradRed,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4, // Membuat garis menjadi smooth/melengkung mewah
+                    pointBackgroundColor: '#ef4444',
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false } 
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' }, 
+                        beginAtZero: true,
+                        ticks: { stepSize: 2 }
+                    },
+                    x: { 
+                        grid: { display: false } 
+                    }
+                }
             }
         });
     </script>

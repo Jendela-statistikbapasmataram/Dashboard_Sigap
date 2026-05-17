@@ -47,12 +47,13 @@
 </head>
 <body class="p-4 md:p-8">
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto space-y-6">
         <!-- Tombol Kembali -->
-        <a href="index.html" class="inline-block mb-6 text-gray-400 hover:text-white transition">
+        <a href="index.html" class="inline-block text-gray-400 hover:text-white transition">
             ← Kembali ke Dashboard
         </a>
 
+        <!-- GRID UTAMA (Kiri & Kanan) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             <!-- KOLOM KIRI (Summary & Gender) -->
@@ -92,7 +93,7 @@
                     <p class="text-[10px] text-gray-500 mt-4 italic text-right">Sumber: Data Bezzetting Pegawai Mei 2026</p>
                 </div>
 
-<!-- Grid Jabatan (Bawah) -->
+                <!-- Grid Jabatan -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <!-- Card Kepala -->
                     <div class="glass-card jabatan-card p-4 text-center" onclick="window.location.href='kepala.html'"> 
@@ -122,9 +123,14 @@
                         <p class="font-bold">20</p>
                     </div>
                 </div>
-                    </div>
-                </div>
+            </div>
+        </div>
 
+        <!-- KARTU GRAFIK GARIS BARU (LEBIH LEBAR DAN SIMETRIS DI BAWAH) -->
+        <div class="glass-card p-8 w-full">
+            <h2 class="text-2xl font-bold mb-4 uppercase tracking-wide">TREN JUMLAH PEGAWAI <span class="text-accent">(5 TAHUN TERAKHIR)</span></h2>
+            <div class="h-72">
+                <canvas id="trenPegawaiChart"></canvas>
             </div>
         </div>
     </div>
@@ -184,6 +190,40 @@
         createRing('ring2', 12, '#ff4d4d');
         createRing('ring3', 34, '#ffffff');
         createRing('ring4', 20, '#ffffff');
+
+        // 4. Tren Jumlah Pegawai (Line Chart)
+        new Chart(document.getElementById('trenPegawaiChart'), {
+            type: 'line',
+            data: {
+                labels: ['2022', '2023', '2024', '2025', '2026'],
+                datasets: [{
+                    label: 'Total Pegawai',
+                    data: [54, 52, 61, 62, 67],
+                    borderColor: '#ff4d4d',
+                    backgroundColor: 'rgba(255, 77, 77, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#ffffff',
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>

@@ -49,7 +49,7 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <div>
                 <h1 class="text-3xl font-bold tracking-tighter uppercase italic">
-                    Monitoring <span class="text-accent">Keterlambatan</span>
+                    Statistik Monitoring <span class="text-accent">Keterlambatan</span>
                 </h1>
                 <p class="text-gray-400 text-sm">Periode Bulan Mei 2026 • Bapas Kelas I Mataram</p>
             </div>
@@ -187,10 +187,10 @@
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
+                labels: ['Minggu I', 'Minggu II', 'Minggu III', 'Minggu IV'],
                 datasets: [{
                     label: 'Total Keterlambatan (Jumlah ASN)',
-                    data: [1, 1, 0, 1, 0],
+                    data: [1, 2, 0, 0, 0],
                     borderColor: '#ff4d4d',
                     backgroundColor: gradient,
                     fill: true,
