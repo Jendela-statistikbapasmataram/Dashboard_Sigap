@@ -87,7 +87,7 @@
             <div class="glass-card border-glow-blue p-6 rounded-2xl cursor-pointer flex flex-col items-center justify-center group" onclick="window.location.href='kendaraandinasroda4.html'">
                 <span class="text-xs text-blue-400 uppercase font-bold tracking-widest mb-2 group-hover:text-blue-300">Roda 4</span>
                 <div class="flex items-baseline">
-                    <span class="text-6xl font-black italic">1</span>
+                    <span class="text-6xl font-black italic">2</span>
                     <span class="ml-2 text-sm font-medium opacity-60">UNIT</span>
                 </div>
             </div>
@@ -143,10 +143,15 @@
         <!-- PERUBAHAN: Penambahan Grafik Garis Baru yang Simetris di Bagian Bawah -->
         <div class="grid grid-cols-1 gap-8 mb-16">
             <div class="glass-card p-8 rounded-3xl">
-                <h2 class="text-xl font-bold mb-6 italic flex items-center gap-2">
-                    <span class="w-2 h-8 bg-red-500 rounded-full"></span>
-                    Jumlah Unit BMN kondisi Rusak yang telah dilakukan penghapusan Melalui sistem Lelang bersama KPKNL MATARAM
-                </h2>
+               <h2 class="text-xl font-bold mb-6 italic flex items-start gap-2">
+  <span class="w-2 h-8 bg-red-500 rounded-full shrink-0"></span>
+  <div class="flex flex-col gap-1">
+    <div>Jumlah Unit BMN kondisi Rusak yang telah dilakukan penghapusan</div>
+    <div class="flex flex-col gap-1">
+      Melalui sistem Lelang bersama KPKNL MATARAM (6 Tahun Terakhir)
+    </div>
+  </div>
+</h2>
                 <div class="chart-container">
                     <canvas id="lelangChart"></canvas>
                 </div>
