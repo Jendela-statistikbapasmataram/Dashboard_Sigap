@@ -240,7 +240,7 @@
                 <!-- SEKSI DEWASA -->
                 <div class="category-box dewasa-section">
                     <h2 class="category-title">Klien Dewasa</h2>
-                    <span class="label-stats">Jumlah Keseluruhan: 56 Klien</span>
+                    <span class="label-stats">Jumlah Keseluruhan: 61 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Dewasa</h3><p id="txt-pb-d">Loading...</p></div>
                         <div class="card" onclick="toggleGlow(this)"><h3>CB Dewasa</h3><p id="txt-cb-d">Loading...</p></div>
@@ -250,14 +250,14 @@
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
                         <div class="card"><h3>Siti Rutmawati</h3><p>6 Klien</p></div>
-                        <div class="card"><h3>Wil. Cakranegara</h3><p>7 Klien</p></div>
-                        <div class="card"><h3>Narkotika</h3><p>20 Klien</p></div>
+                        <div class="card"><h3>Wil. Cakranegara</h3><p>10 Klien</p></div>
+                        <div class="card"><h3>Narkotika</h3><p>24 Klien</p></div>
                     </div>
                 </div>
 
                 <!-- SEKSI ANAK -->
                 <div class="category-box anak-section">
-                    <h2 class="category-title">Klien Anak</h2>
+                    <h2 class="category-title">Klien Anak(lagi proses menarik data)</h2>
                     <span class="label-stats">Jumlah Keseluruhan: 0 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Anak</h3><p id="txt-pb-a">Loading...</p></div>
@@ -267,9 +267,9 @@
                     <div class="chart-container"><canvas id="chartAnakBar"></canvas></div>
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
-                        <div class="card"><h3>Ibu Maya</h3><p>0 Klien</p></div>
-                        <div class="card"><h3>Wil. Utara</h3><p>0 Klien</p></div>
-                        <div class="card"><h3>Wil. Selatan</h3><p>0 Klien</p></div>
+                        <div class="card"><h3>Nihil</h3><p>0 Klien</p></div>
+                        <div class="card"><h3>Nihil</h3><p>0 Klien</p></div>
+                        <div class="card"><h3>Nihil</h3><p>0 Klien</p></div>
                     </div>
                 </div>
 
@@ -335,7 +335,7 @@
         // FUNGSI INISIALISASI DATA MANUAL (STATIS)
         function initDashboard() {
             // --- GANTI ANGKA DI SINI ---
-            const valPBD = 41;  // PB Dewasa (Sesuai Gambar)
+            const valPBD = 46;  // PB Dewasa (Sesuai Gambar)
             const valCBD = 15;  // CB Dewasa
             const valPBA = 0;  // PB Anak
             const valCBA = 0;   // CB Anak
@@ -404,7 +404,7 @@
                     datasets: [
                         {
                             label: 'Klien Dewasa',
-                            data: [0, 0, 0, 0, 41, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 46, , , , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#00d2ff',
                             backgroundColor: 'rgba(0, 210, 255, 0.1)',
                             borderWidth: 3,
@@ -414,7 +414,7 @@
                         },
                         {
                             label: 'Klien Anak',
-                            data: [0, 0, 0, 0, 3, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 0, , , , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#2ecc71',
                             backgroundColor: 'rgba(46, 204, 113, 0.1)',
                             borderWidth: 3,
