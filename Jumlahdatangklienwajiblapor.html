@@ -219,7 +219,7 @@
 
     <header>
         <h1>Statistik Klien Wajib Lapor</h1>
-        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di Bapas Kelas I Mataram</p>
+        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di Bapas Kelas I Mataram Bulan Mei</p>
     </header>
 
     <div class="nav-container">
@@ -240,7 +240,7 @@
                 <!-- SEKSI DEWASA -->
                 <div class="category-box dewasa-section">
                     <h2 class="category-title">Klien Dewasa</h2>
-                    <span class="label-stats">Jumlah Keseluruhan: 61 Klien</span>
+                    <span class="label-stats">Jumlah Keseluruhan: 75 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Dewasa</h3><p id="txt-pb-d">Loading...</p></div>
                         <div class="card" onclick="toggleGlow(this)"><h3>CB Dewasa</h3><p id="txt-cb-d">Loading...</p></div>
@@ -249,15 +249,15 @@
                     <div class="chart-container"><canvas id="chartDewasaBar"></canvas></div>
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
-                        <div class="card"><h3>Siti Rutmawati</h3><p>6 Klien</p></div>
-                        <div class="card"><h3>Wil. Cakranegara</h3><p>10 Klien</p></div>
-                        <div class="card"><h3>Narkotika</h3><p>24 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Siti Rutmawati</h3><p>8 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Wil. Cakranegara</h3><p>10 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>30 Klien</p></div>
                     </div>
                 </div>
 
                 <!-- SEKSI ANAK -->
                 <div class="category-box anak-section">
-                    <h2 class="category-title">Klien Anak(lagi proses menarik data)</h2>
+                    <h2 class="category-title">Klien Anak(sedang menunggu validasi register anak)</h2>
                     <span class="label-stats">Jumlah Keseluruhan: 0 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Anak</h3><p id="txt-pb-a">Loading...</p></div>
@@ -267,9 +267,9 @@
                     <div class="chart-container"><canvas id="chartAnakBar"></canvas></div>
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
-                        <div class="card"><h3>Nihil</h3><p>0 Klien</p></div>
-                        <div class="card"><h3>Nihil</h3><p>0 Klien</p></div>
-                        <div class="card"><h3>Nihil</h3><p>0 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Nihil</h3><p>0 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Nihil</h3><p>0 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Nihil</h3><p>0 Klien</p></div>
                     </div>
                 </div>
 
@@ -295,7 +295,7 @@
             <div class="info-footer-container">
                 <div class="info-banner">
                     <div class="info-text">
-                        <p>Data ini di update setiap minggu di <strong>hari Senin</strong>.</p>
+                        <p>Data ini di update <strong>02 Juni 2026</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -335,8 +335,8 @@
         // FUNGSI INISIALISASI DATA MANUAL (STATIS)
         function initDashboard() {
             // --- GANTI ANGKA DI SINI ---
-            const valPBD = 46;  // PB Dewasa (Sesuai Gambar)
-            const valCBD = 15;  // CB Dewasa
+            const valPBD = 59;  // PB Dewasa (Sesuai Gambar)
+            const valCBD = 16;  // CB Dewasa
             const valPBA = 0;  // PB Anak
             const valCBA = 0;   // CB Anak
             // ---------------------------
@@ -404,7 +404,7 @@
                     datasets: [
                         {
                             label: 'Klien Dewasa',
-                            data: [0, 0, 0, 0, 46, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 75, , , , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#00d2ff',
                             backgroundColor: 'rgba(0, 210, 255, 0.1)',
                             borderWidth: 3,
