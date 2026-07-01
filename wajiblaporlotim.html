@@ -219,7 +219,7 @@
 
     <header>
         <h1>Statistik Klien Wajib Lapor</h1>
-        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di di Pos Bapas Lombok Timur Bulan Mei</p>
+        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di di Pos Bapas Lombok Timur Bulan Juni</p>
     </header>
 
     <div class="nav-container">
@@ -249,16 +249,16 @@
                     <div class="chart-container"><canvas id="chartDewasaBar"></canvas></div>
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
-                        <div class="card"><h3 style="color: #ffff00;">Jery Agus Pratama dan I Wayan Sudiartha </h3><p>4 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Wil. Masbagik</h3><p>5 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>9 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Jery Agus Pratama </h3><p>7 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Wil. Terara</h3><p>6 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>12 Klien</p></div>
                     </div>
                 </div>
 
                 <!-- SEKSI ANAK -->
                 <div class="category-box anak-section">
-                    <h2 class="category-title">Klien Anak(sedang menunggu validasi register anak)</h2>
-                    <span class="label-stats">Jumlah Keseluruhan: 0 Klien</span>
+                    <h2 class="category-title">Klien Anak</h2>
+                    <span class="label-stats">Jumlah Keseluruhan: 3 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Anak</h3><p id="txt-pb-a">Loading...</p></div>
                         <div class="card" onclick="toggleGlow(this)"><h3>CB Anak</h3><p id="txt-cb-a">Loading...</p></div>
@@ -295,7 +295,7 @@
             <div class="info-footer-container">
                 <div class="info-banner">
                     <div class="info-text">
-                        <p>Data ini di update <strong>02 Juni 2026</strong>.</p>
+                        <p>Data ini di update <strong>01 Juli 2026</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -335,9 +335,9 @@
         // FUNGSI INISIALISASI DATA MANUAL (STATIS)
         function initDashboard() {
             // --- GANTI ANGKA DI SINI ---
-            const valPBD = 25;  // PB Dewasa (Sesuai Gambar)
-            const valCBD = 15;  // CB Dewasa
-            const valPBA = 0;  // PB Anak
+            const valPBD = 35;  // PB Dewasa (Sesuai Gambar)
+            const valCBD =  5;  // CB Dewasa
+            const valPBA = 3;  // PB Anak
             const valCBA = 0;   // CB Anak
             // ---------------------------
 
@@ -404,7 +404,7 @@
                     datasets: [
                         {
                             label: 'Klien Dewasa',
-                            data: [0, 0, 0, 0, 40, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 40,40 , , , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#00d2ff',
                             backgroundColor: 'rgba(0, 210, 255, 0.1)',
                             borderWidth: 3,
@@ -414,7 +414,7 @@
                         },
                         {
                             label: 'Klien Anak',
-                            data: [0, 0, 0, 0, 0, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 0, 3, , , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#2ecc71',
                             backgroundColor: 'rgba(46, 204, 113, 0.1)',
                             borderWidth: 3,

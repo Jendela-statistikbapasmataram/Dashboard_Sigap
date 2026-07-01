@@ -219,7 +219,7 @@
 
     <header>
         <h1>Statistik Klien Wajib Lapor</h1>
-        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di Pos Bapas Lombok Tengah Bulan Mei</p>
+        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di Pos Bapas Lombok Tengah Bulan Juni</p>
     </header>
 
     <div class="nav-container">
@@ -240,7 +240,7 @@
                 <!-- SEKSI DEWASA -->
                 <div class="category-box dewasa-section">
                     <h2 class="category-title">Klien Dewasa</h2>
-                    <span class="label-stats">Jumlah Keseluruhan: 42 Klien</span>
+                    <span class="label-stats">Jumlah Keseluruhan: 40 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Dewasa</h3><p id="txt-pb-d">Loading...</p></div>
                         <div class="card" onclick="toggleGlow(this)"><h3>CB Dewasa</h3><p id="txt-cb-d">Loading...</p></div>
@@ -249,15 +249,15 @@
                     <div class="chart-container"><canvas id="chartDewasaBar"></canvas></div>
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
-                        <div class="card"><h3 style="color: #ffff00;">M. Arivin </h3><p>6 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Wil. Praya</h3><p>5 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Indra Ruka Hison Syafi'i </h3><p>6 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Wil. Praya</h3><p>14 Klien</p></div>
                         <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>17 Klien</p></div>
                     </div>
                 </div>
 
                 <!-- SEKSI ANAK -->
                 <div class="category-box anak-section">
-                    <h2 class="category-title">Klien Anak(sedang menunggu validasi register anak)</h2>
+                    <h2 class="category-title">Klien Anak</h2>
                     <span class="label-stats">Jumlah Keseluruhan: 0 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Anak</h3><p id="txt-pb-a">Loading...</p></div>
@@ -295,7 +295,7 @@
             <div class="info-footer-container">
                 <div class="info-banner">
                     <div class="info-text">
-                        <p>Data ini di update <strong>02 Juni 2026</strong>.</p>
+                        <p>Data ini di update <strong>01 Juli 2026</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -335,8 +335,8 @@
         // FUNGSI INISIALISASI DATA MANUAL (STATIS)
         function initDashboard() {
             // --- GANTI ANGKA DI SINI ---
-            const valPBD = 40;  // PB Dewasa (Sesuai Gambar)
-            const valCBD = 2;  // CB Dewasa
+            const valPBD = 32;  // PB Dewasa (Sesuai Gambar)
+            const valCBD = 8;  // CB Dewasa
             const valPBA = 0;  // PB Anak
             const valCBA = 0;   // CB Anak
             // ---------------------------
@@ -404,7 +404,7 @@
                     datasets: [
                         {
                             label: 'Klien Dewasa',
-                            data: [0, 0, 0, 0, 42, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 42,40 , , , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#00d2ff',
                             backgroundColor: 'rgba(0, 210, 255, 0.1)',
                             borderWidth: 3,
@@ -414,7 +414,7 @@
                         },
                         {
                             label: 'Klien Anak',
-                            data: [0, 0, 0, 0, 0, , , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 0,0 , , , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#2ecc71',
                             backgroundColor: 'rgba(46, 204, 113, 0.1)',
                             borderWidth: 3,
