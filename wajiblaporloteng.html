@@ -219,7 +219,7 @@
 
     <header>
         <h1>Statistik Klien Wajib Lapor</h1>
-        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di Pos Bapas Lombok Tengah Bulan Juli</p>
+        <p>Visualisasi Jumlah Data Klien yang datang Wajib Lapor di Pos Bapas Lombok Tengah Bulan Agustus</p>
     </header>
 
     <div class="nav-container">
@@ -240,7 +240,7 @@
                 <!-- SEKSI DEWASA -->
                 <div class="category-box dewasa-section">
                     <h2 class="category-title">Klien Dewasa</h2>
-                    <span class="label-stats">Jumlah Keseluruhan: 42 Klien</span>
+                    <span class="label-stats">Jumlah Keseluruhan: 40 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Dewasa</h3><p id="txt-pb-d">Loading...</p></div>
                         <div class="card" onclick="toggleGlow(this)"><h3>CB Dewasa</h3><p id="txt-cb-d">Loading...</p></div>
@@ -250,8 +250,8 @@
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
                         <div class="card"><h3 style="color: #ffff00;">Indra Ruka Hison Syafi'i </h3><p>6 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Wil. Praya</h3><p>16 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>19 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Wil. Praya</h3><p>11 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>14 Klien</p></div>
                     </div>
                 </div>
 
@@ -295,7 +295,7 @@
             <div class="info-footer-container">
                 <div class="info-banner">
                     <div class="info-text">
-                        <p>Data ini di update <strong>01 Agustus 2026</strong>.</p>
+                        <p>Data ini di update <strong>01 September 2026</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -303,7 +303,7 @@
 
         <div id="view-spreadsheet">
             <iframe 
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vROPIjo72xCMzioFUO-BeRb_I3mRRR0dFXcW0rAcwchOYl_rvd6kGuzxAyoI6YGsmPhDuUHp0pSC13n/pubhtml" 
+                src="https://docs.google.com/spreadsheets/d/1fDM4sDoP4zOfu7ZsVkgtvLbWlRK2oWqPym3MJEFEG3o/edit?gid=478261695#gid=478261695" 
                 style="width: 100%; height: 100%; border: none;">
             </iframe>
         </div>
@@ -335,8 +335,8 @@
         // FUNGSI INISIALISASI DATA MANUAL (STATIS)
         function initDashboard() {
             // --- GANTI ANGKA DI SINI ---
-            const valPBD = 35;  // PB Dewasa (Sesuai Gambar)
-            const valCBD = 7;  // CB Dewasa
+            const valPBD = 33;  // PB Dewasa (Sesuai Gambar)
+            const valCBD = 6;  // CB Dewasa
             const valPBA = 1;  // PB Anak
             const valCBA = 0;   // CB Anak
             // ---------------------------
@@ -404,7 +404,7 @@
                     datasets: [
                         {
                             label: 'Klien Dewasa',
-                            data: [0, 0, 0, 0, 42,40,42 , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 42,40,42,39 , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#00d2ff',
                             backgroundColor: 'rgba(0, 210, 255, 0.1)',
                             borderWidth: 3,
@@ -414,7 +414,7 @@
                         },
                         {
                             label: 'Klien Anak',
-                            data: [0, 0, 0, 0, 0,0 ,1 , , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 0,0 ,1,1 , , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#2ecc71',
                             backgroundColor: 'rgba(46, 204, 113, 0.1)',
                             borderWidth: 3,
