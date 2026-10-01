@@ -240,7 +240,7 @@
                 <!-- SEKSI DEWASA -->
                 <div class="category-box dewasa-section">
                     <h2 class="category-title">Klien Dewasa</h2>
-                    <span class="label-stats">Jumlah Keseluruhan: 40 Klien</span>
+                    <span class="label-stats">Jumlah Keseluruhan: 34 Klien</span>
                     <div class="card-group">
                         <div class="card" onclick="toggleGlow(this)"><h3>PB Dewasa</h3><p id="txt-pb-d">Loading...</p></div>
                         <div class="card" onclick="toggleGlow(this)"><h3>CB Dewasa</h3><p id="txt-cb-d">Loading...</p></div>
@@ -249,9 +249,9 @@
                     <div class="chart-container"><canvas id="chartDewasaBar"></canvas></div>
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
-                        <div class="card"><h3 style="color: #ffff00;">Indra Ruka Hison Syafi'i </h3><p>6 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Wil. Praya</h3><p>11 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>14 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Ika Indayani </h3><p>6 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Wil. Praya</h3><p>7 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Narkotika</h3><p>17 Klien</p></div>
                     </div>
                 </div>
 
@@ -267,9 +267,9 @@
                     <div class="chart-container"><canvas id="chartAnakBar"></canvas></div>
                     <span class="label-stats">TOP PK/APK | Wilayah | Jenis Kasus:</span>
                     <div class="stats-group">
-                        <div class="card"><h3 style="color: #ffff00;">Jery Agus Pratama</h3><p>1 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Jerry Agus Pratama</h3><p>1 Klien</p></div>
                         <div class="card"><h3 style="color: #ffff00;">Wil.Janapria</h3><p>1 Klien</p></div>
-                        <div class="card"><h3 style="color: #ffff00;">Perlindungan Anak</h3><p>1 Klien</p></div>
+                        <div class="card"><h3 style="color: #ffff00;">Perlindungan anak]</h3><p>1 Klien</p></div>
                     </div>
                 </div>
 
@@ -295,7 +295,7 @@
             <div class="info-footer-container">
                 <div class="info-banner">
                     <div class="info-text">
-                        <p>Data ini di update <strong>01 September 2026</strong>.</p>
+                        <p>Data ini di update <strong>01 Oktober 2026</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -336,7 +336,7 @@
         function initDashboard() {
             // --- GANTI ANGKA DI SINI ---
             const valPBD = 33;  // PB Dewasa (Sesuai Gambar)
-            const valCBD = 6;  // CB Dewasa
+            const valCBD = 1;  // CB Dewasa
             const valPBA = 1;  // PB Anak
             const valCBA = 0;   // CB Anak
             // ---------------------------
@@ -404,7 +404,7 @@
                     datasets: [
                         {
                             label: 'Klien Dewasa',
-                            data: [0, 0, 0, 0, 42,40,42,39 , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 42,40,42,39,35 , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#00d2ff',
                             backgroundColor: 'rgba(0, 210, 255, 0.1)',
                             borderWidth: 3,
@@ -414,7 +414,7 @@
                         },
                         {
                             label: 'Klien Anak',
-                            data: [0, 0, 0, 0, 0,0 ,1,1 , , , , ], // Silakan sesuaikan data ini nanti
+                            data: [0, 0, 0, 0, 0,0 ,1,1 ,1 , , , ], // Silakan sesuaikan data ini nanti
                             borderColor: '#2ecc71',
                             backgroundColor: 'rgba(46, 204, 113, 0.1)',
                             borderWidth: 3,
