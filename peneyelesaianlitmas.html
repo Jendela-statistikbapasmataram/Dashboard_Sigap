@@ -12,6 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <!-- html2pdf for PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Leaflet CSS & JS untuk Peta -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -19,22 +22,12 @@
         
         /* Animasi Fade In & Slide Up */
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .animate-fade-up {
-            opacity: 0;
-            animation: fadeUp 0.8s ease-out forwards;
-        }
-
-        /* Delay bertahap untuk animasi (Staggered Animation) */
+        .animate-fade-up { opacity: 0; animation: fadeUp 0.8s ease-out forwards; }
+        
+        /* Delay bertahap untuk animasi */
         .delay-100 { animation-delay: 0.2s; }
         .delay-200 { animation-delay: 0.3s; }
         .delay-300 { animation-delay: 0.5s; }
@@ -45,10 +38,12 @@
         .delay-800 { animation-delay: 1.0s; }
         .delay-900 { animation-delay: 1.1s; }
 
-        /* Efek Hover Menyala pada Kartu - Diperbarui agar lebih hidup */
+        /* Efek Hover Menyala pada Kartu */
         .card { 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efek memantul ringan */
-            border: 2px solid transparent; /* Persiapan untuk warna border saat hover */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 2px solid transparent; 
+            break-inside: avoid;
+            page-break-inside: avoid;
         }
         .card:hover { 
             transform: translateY(-10px) scale(1.03); 
@@ -64,6 +59,7 @@
                 animation: none !important;
                 transform: none !important;
             }
+            body { background-color: #ffffff !important; }
         }
         
         [contenteditable="true"]:hover {
@@ -76,6 +72,11 @@
             outline: 2px solid #3b82f6;
             background-color: #ffffff;
         }
+        
+        /* Leaflet Map z-index fix untuk tailwind */
+        .leaflet-container {
+            z-index: 1 !important;
+        }
     </style>
 </head>
 <body class="bg-slate-300 p-6">
@@ -83,34 +84,32 @@
     <!-- Top Action Bar -->
     <div class="max-w-7xl mx-auto flex justify-end mb-4 space-x-3 no-print animate-fade-up">
         <div class="text-sm text-gray-600 mr-auto self-center bg-blue-100 py-1 px-3 rounded text-blue-800 shadow-sm">
-            💡 <b>Source:</b> Registrasi Bapas Mataram.
+            💡 <b>Source:</b> Data ini bergerak secara real-time, seiring dengan adanya penerimaan dan pengakhiran klien setiap harinya.
         </div>
-        
-        <a href="URL_GOOGLE_DRIVE_ANDA_DI_SINI" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-sm font-semibold flex items-center transition text-sm">
+        <a href="URL_GOOGLE_DRIVE_ANDA_DI_SINI_PB" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-sm font-semibold flex items-center transition text-sm">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            Sumber Data
+            Sumber Data Klien PB
         </a>
-
-        <button onclick="exportPDF()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-sm font-semibold flex items-center transition text-sm">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            Unduh PDF
-        </button>
+        <a href="URL_GOOGLE_DRIVE_ANDA_DI_SINI_CB" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-sm font-semibold flex items-center transition text-sm">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            Sumber Data Klien CB
+        </a>
     </div>
 
-    <div id="dashboard-content">
+    <div id="dashboard-content" class="bg-slate-300">
         <!-- Header -->
         <header class="animate-fade-up max-w-7xl mx-auto bg-white rounded-xl shadow-md p-6 mb-8 flex justify-between items-center border-l-4 border-blue-600">
             <div class="flex items-center space-x-4">
+                <!-- Pastikan path logo ditjenpas.png Anda benar di folder lokal -->
                 <img src="logo ditjenpas.png" alt="Logo Instansi" class="w-16 h-16 md:w-20 md:h-20 object-contain">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-800" contenteditable="true">Sistem Informasi Klien Pemasyarakatan</h1>
                     <p class="text-gray-500 mt-1" contenteditable="true">Data Demografi & Statistik Pelaporan Klien - Bapas Kelas I Mataram</p>
                 </div>
             </div>
-            
             <div class="text-right hidden md:block">
                 <p class="text-sm font-semibold text-gray-400" contenteditable="true">Update Terakhir</p>
-                <p class="text-lg font-bold text-blue-600" contenteditable="true" id="periodeUpdate">Oktober 2026</p>
+                <p class="text-lg font-bold text-blue-600" contenteditable="true" id="periodeUpdate">November 2026</p>
             </div>
         </header>
 
@@ -125,8 +124,16 @@
                     <p class="text-2xl font-bold text-gray-800" contenteditable="true">1,245</p>
                 </div>
             </div>
-            
             <div class="card animate-fade-up delay-200 bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div class="p-3 bg-yellow-100 text-yellow-600 rounded-lg shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500 font-semibold" contenteditable="true">Klien PB dan CB</p>
+                    <p class="text-2xl font-bold text-gray-800" contenteditable="true">1112 dan 562</p>
+                </div>
+            </div>
+            <div class="card animate-fade-up delay-300 bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
                 <div class="p-3 bg-green-100 text-green-600 rounded-lg shadow-inner">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
@@ -135,17 +142,6 @@
                     <p class="text-2xl font-bold text-gray-800" contenteditable="true">92.4%</p>
                 </div>
             </div>
-
-            <div class="card animate-fade-up delay-300 bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
-                <div class="p-3 bg-yellow-100 text-yellow-600 rounded-lg shadow-inner">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-500 font-semibold" contenteditable="true">Klien PB dan CB</p>
-                    <p class="text-2xl font-bold text-gray-800" contenteditable="true">1112/562</p>
-                </div>
-            </div>
-
             <div class="card animate-fade-up delay-400 bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
                 <div class="p-3 bg-red-100 text-red-600 rounded-lg shadow-inner">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
@@ -157,18 +153,17 @@
             </div>
         </div>
 
-        <!-- Charts Section Row 1 (Wilayah & Kasus) -->
+        <!-- Charts Section Row 1 (Wilayah Map & Kasus) -->
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <div class="card animate-fade-up delay-400 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h2 class="text-lg font-bold text-gray-800 mb-4" contenteditable="true">Data Persebaran Kab/Kota</h2>
-                <div class="relative h-64 w-full flex justify-center">
-                    <canvas id="wilayahChart"></canvas>
+                <h2 class="text-lg font-bold text-gray-800 mb-4" contenteditable="true">Peta Persebaran Klien di Lombok</h2>
+                <div class="relative h-[350px] w-full rounded-lg overflow-hidden border border-gray-200 z-0 shadow-inner">
+                    <div id="mapWilayah" class="w-full h-full"></div>
                 </div>
             </div>
-
             <div class="card animate-fade-up delay-400 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h2 class="text-lg font-bold text-gray-800 mb-4" contenteditable="true">Data Kasus Pidana Terbanyak</h2>
-                <div class="relative h-64 w-full">
+                <div class="relative h-[350px] w-full">
                     <canvas id="kasusChart"></canvas>
                 </div>
             </div>
@@ -182,7 +177,6 @@
                     <canvas id="kecamatanChart"></canvas>
                 </div>
             </div>
-
             <div class="card animate-fade-up delay-500 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h2 class="text-lg font-bold text-gray-800 mb-4" contenteditable="true">Data Pendidikan</h2>
                 <div class="relative h-64 w-full">
@@ -199,7 +193,6 @@
                     <canvas id="desaChart"></canvas>
                 </div>
             </div>
-
             <div class="card animate-fade-up delay-600 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h2 class="text-lg font-bold text-gray-800 mb-4" contenteditable="true">Data Pekerjaan</h2>
                 <div class="relative h-64 w-full">
@@ -232,12 +225,12 @@
             </div>
         </div>
 
-        <!-- TOP PERFORM ASN (JANUARI - OKTOBER) DALAM BENTUK TABEL -->
+        <!-- TOP PERFORM ASN -->
         <div class="card animate-fade-up delay-900 max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
             <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-800">🏆 Top Perform ASN Bulanan (Januari - Oktober)</h2>
-                    <p class="text-sm text-gray-600 mt-1">Daftar Pembimbing Kemasyarakatan (PK / APK) terbaik berdasarkan kehadiran klien wajib lapor.</p>
+                    <h2 class="text-xl font-bold text-gray-800">🏆 Rapor Kinerja Tahunan: Catatan Total Klien & Barisan ASN Terbaik Januari–Desember.</h2>
+                    <p class="text-sm text-gray-600 mt-1">Daftar Pembimbing Kemasyarakatan (PK / APK) Terbaik, yang mendatangkan Klien Wajib lapor terbanyak.</p>
                 </div>
             </div>
 
@@ -249,6 +242,7 @@
                             <th class="py-3 px-4 font-semibold">Nama Pegawai</th>
                             <th class="py-3 px-4 font-semibold">Jabatan</th>
                             <th class="py-3 px-4 font-semibold text-center">Klien Hadir</th>
+                            <th class="py-3 px-4 font-semibold text-center">Jumlah Total Klien</th>
                         </tr>
                     </thead>
                     <tbody class="text-sm text-gray-700 bg-white divide-y divide-gray-200">
@@ -257,60 +251,84 @@
                             <td class="py-2.5 px-4 font-bold text-gray-800">Budi Santoso, S.H.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Ahli Pertama</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">120</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">135</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">Februari</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Siti Aminah, S.Sos.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Madya</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">125</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">138</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">Maret</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Drs. H. Suhardi</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Utama</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">130</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">142</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">April</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Rina Wulandari, S.H.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Muda</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">115</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">125</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">Mei</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Ahmad Fauzi, S.H.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Mahir</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">135</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">150</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">Juni</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Dewi Lestari, S.Tr.Pem.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Pertama</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">140</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">155</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">Juli</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">M. Zainul Arifin, S.H.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Madya</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">128</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">145</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">Agustus</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Nurul Hidayah, S.Sos.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Muda</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">145</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">160</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">September</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Hendra Gunawan, S.H.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Mahir</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">138</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">152</td>
                         </tr>
                         <tr class="hover:bg-blue-50 transition-colors">
                             <td class="py-2.5 px-4 font-medium text-gray-900">Oktober</td>
                             <td class="py-2.5 px-4 font-bold text-gray-800">Ahmad Fauzi, S.H.</td>
                             <td class="py-2.5 px-4 text-gray-600">PK Mahir</td>
                             <td class="py-2.5 px-4 text-center font-bold text-blue-600">142</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">156</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 transition-colors">
+                            <td class="py-2.5 px-4 font-medium text-gray-900">November</td>
+                            <td class="py-2.5 px-4 font-bold text-gray-800">Budi Santoso, S.H.</td>
+                            <td class="py-2.5 px-4 text-gray-600">PK Ahli Pertama</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-blue-600">148</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">165</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 transition-colors">
+                            <td class="py-2.5 px-4 font-medium text-gray-900">Desember</td>
+                            <td class="py-2.5 px-4 font-bold text-gray-800">Siti Aminah, S.Sos.</td>
+                            <td class="py-2.5 px-4 text-gray-600">PK Madya</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-blue-600">155</td>
+                            <td class="py-2.5 px-4 text-center font-bold text-gray-600">170</td>
                         </tr>
                     </tbody>
                 </table>
@@ -322,78 +340,90 @@
     <script>
         // Mendaftarkan Plugin DataLabels
         Chart.register(ChartDataLabels);
-
         Chart.defaults.font.family = "'Inter', sans-serif";
         Chart.defaults.color = '#64748b';
         Chart.defaults.maintainAspectRatio = false;
-        
-        // Animasi Chart Default
-        Chart.defaults.animation.duration = 1500;
-        Chart.defaults.animation.easing = 'easeOutQuart';
-
-        // Pengaturan Global DataLabels
         Chart.defaults.set('plugins.datalabels', {
-            color: '#475569',
-            font: { weight: 'bold', size: 12 }
+            color: '#475569', font: { weight: 'bold', size: 12 }
+        });
+
+        // Data Chart
+        const dataKasus = { labels: ['Narkotika', 'Pencurian', 'Penipuan', 'Perlindungan Anak', 'KDRT'], values: [420, 310, 180, 150, 95] };
+        const dataKecamatan = { labels: ['Ampenan', 'Mataram', 'Cakranegara', 'Sandubaya', 'Selaparang', 'Sekarbela'], values: [115, 98, 85, 62, 54, 36] };
+        const dataPendidikan = { labels: ['SD/Tidak Sekolah', 'SMP', 'SMA', 'Diploma/S1', 'S2/S3'], values: [320, 390, 375, 115, 35] };
+        const dataDesa = { labels: ['Pejanggik', 'Pagutan', 'Selagalas', 'Tanjung Karang', 'Rembiga', 'Ampenan Selatan'], values: [45, 38, 32, 28, 24, 20] };
+        const dataPekerjaan = { labels: ['Buruh/Swasta', 'Wiraswasta', 'Petani/Nelayan', 'Tidak Bekerja', 'Pelajar', 'PNS/TNI/Polri'], values: [450, 320, 210, 150, 85, 30] };
+
+        // =====================================================================
+        // PETA PERSEBARAN LOMBOK BESERTA BATAS WILAYAH & LABEL LENGKAP
+        // =====================================================================
+
+        // Inisialisasi peta berpusat di tengah Lombok
+        const map = L.map('mapWilayah', { scrollWheelZoom: false }).setView([-8.6100, 116.3240], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap',
+            maxZoom: 18,
+        }).addTo(map);
+
+        // 1. Array Polygon Kasar untuk Batas Administratif (Stylized Borders)
+        const batasWilayah = {
+            'Kota Mataram': [
+                [-8.55, 116.07], [-8.55, 116.14], [-8.63, 116.14], [-8.63, 116.07]
+            ],
+            'Lombok Barat': [
+                [-8.45, 116.05], [-8.45, 116.20], [-8.70, 116.20], [-8.85, 116.00], [-8.70, 115.90], [-8.55, 116.07], [-8.63, 116.07], [-8.63, 116.14], [-8.55, 116.14], [-8.55, 116.07]
+            ],
+            'Lombok Tengah': [
+                [-8.50, 116.20], [-8.50, 116.40], [-8.90, 116.45], [-8.90, 116.15], [-8.70, 116.20]
+            ],
+            'Lombok Timur': [
+                [-8.30, 116.40], [-8.25, 116.60], [-8.40, 116.70], [-8.80, 116.55], [-8.90, 116.45], [-8.50, 116.40]
+            ],
+            'Lombok Utara': [
+                [-8.20, 116.15], [-8.25, 116.35], [-8.30, 116.40], [-8.50, 116.40], [-8.50, 116.20], [-8.45, 116.20], [-8.45, 116.05]
+            ]
+        };
+
+        // 2. Data Master untuk Label dan Peta
+        const dataPetaLombok = [
+            { name: 'Kota Mataram', coords: [-8.5900, 116.1050], clients: 450, color: '#3b82f6', poly: batasWilayah['Kota Mataram'] },
+            { name: 'Lombok Barat', coords: [-8.6500, 116.0200], clients: 280, color: '#10b981', poly: batasWilayah['Lombok Barat'] },
+            { name: 'Lombok Tengah', coords: [-8.7100, 116.2900], clients: 215, color: '#f59e0b', poly: batasWilayah['Lombok Tengah'] },
+            { name: 'Lombok Timur', coords: [-8.5500, 116.5300], clients: 250, color: '#ef4444', poly: batasWilayah['Lombok Timur'] },
+            { name: 'Lombok Utara', coords: [-8.3500, 116.2000], clients: 50, color: '#8b5cf6', poly: batasWilayah['Lombok Utara'] }
+        ];
+
+        // 3. Render Polygon dan Text Label
+        dataPetaLombok.forEach(lokasi => {
+            // Gambar Polygon Batas Wilayah
+            L.polygon(lokasi.poly, {
+                color: lokasi.color,
+                weight: 2,
+                opacity: 1,
+                fillColor: lokasi.color,
+                fillOpacity: 0.15,
+                dashArray: '5, 5' // Garis putus-putus
+            }).addTo(map);
+            
+            // Marker Custom dengan Format "Nama Wilayah = X Klien"
+            L.marker(lokasi.coords, {
+                icon: L.divIcon({
+                    className: 'custom-map-label',
+                    html: `<div style="background-color: ${lokasi.color}; color: white; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border: 2px solid white; display: inline-block;">
+                              ${lokasi.name} = ${lokasi.clients} Klien
+                           </div>`,
+                    // Menentukan offset agar label berada pas di titik tengah
+                    iconSize: [200, 30], 
+                    iconAnchor: [100, 15] 
+                })
+            }).addTo(map);
         });
 
         // =====================================================================
-        // BAGIAN PENGATURAN DATA
-        // =====================================================================
-        
-        const dataWilayah = {
-            labels: ['Kota Mataram', 'Lombok Barat', 'Lombok Tengah', 'Lombok Timur', 'Lombok Utara'],
-            values: [450, 280, 215, 250, 50]
-        };
-        
-        const dataKasus = {
-            labels: ['Narkotika', 'Pencurian', 'Penipuan', 'Perlindungan Anak', 'KDRT'],
-            values: [420, 310, 180, 150, 95]
-        };
-        
-        const dataKecamatan = {
-            labels: ['Ampenan', 'Mataram', 'Cakranegara', 'Sandubaya', 'Selaparang', 'Sekarbela'],
-            values: [115, 98, 85, 62, 54, 36]
-        };
-        
-        const dataPendidikan = {
-            labels: ['SD/Tidak Sekolah', 'SMP', 'SMA', 'Diploma/S1', 'S2/S3'],
-            values: [320, 390, 375, 115, 35]
-        };
-
-        const dataDesa = {
-            labels: ['Pejanggik', 'Pagutan', 'Selagalas', 'Tanjung Karang', 'Rembiga', 'Ampenan Selatan'],
-            values: [45, 38, 32, 28, 24, 20]
-        };
-
-        const dataPekerjaan = {
-            labels: ['Buruh/Swasta', 'Wiraswasta', 'Petani/Nelayan', 'Tidak Bekerja', 'Pelajar', 'PNS/TNI/Polri'],
-            values: [450, 320, 210, 150, 85, 30]
-        };
-
+        // CHART INISIALISASI
         // =====================================================================
 
-        // 1. Chart Wilayah (Polar Area)
-        new Chart(document.getElementById('wilayahChart'), {
-            type: 'polarArea',
-            data: {
-                labels: dataWilayah.labels,
-                datasets: [{
-                    data: dataWilayah.values,
-                    backgroundColor: ['rgba(59, 130, 246, 0.7)', 'rgba(16, 185, 129, 0.7)', 'rgba(245, 158, 11, 0.7)', 'rgba(239, 68, 68, 0.7)', 'rgba(139, 92, 246, 0.7)'],
-                    borderWidth: 1
-                }]
-            },
-            options: { 
-                responsive: true, 
-                plugins: { 
-                    legend: { position: 'right' },
-                    datalabels: { color: '#ffffff', anchor: 'center', align: 'center' }
-                } 
-            }
-        });
-
-        // 2. Chart Klasifikasi Tindak Pidana (Bar)
         new Chart(document.getElementById('kasusChart'), {
             type: 'bar',
             data: {
@@ -405,215 +435,50 @@
                     borderRadius: 4,
                 }]
             },
-            options: { 
-                layout: { padding: { top: 25 } }, 
-                responsive: true, 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: { anchor: 'end', align: 'top' }
-                }, 
-                scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } } } 
-            }
+            options: { layout: { padding: { top: 25 } }, responsive: true, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top' } }, scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } } } }
         });
 
-        // 3. Chart Kecamatan (Horizontal Bar)
         new Chart(document.getElementById('kecamatanChart'), {
             type: 'bar',
-            data: {
-                labels: dataKecamatan.labels,
-                datasets: [{
-                    label: 'Jumlah Klien',
-                    data: dataKecamatan.values,
-                    backgroundColor: ['rgba(139, 92, 246, 0.8)', 'rgba(236, 72, 153, 0.8)', 'rgba(244, 63, 94, 0.8)', 'rgba(14, 165, 233, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(234, 179, 8, 0.8)'],
-                    borderRadius: 4,
-                }]
-            },
-            options: { 
-                layout: { padding: { right: 35 } },
-                responsive: true, 
-                indexAxis: 'y', 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: { anchor: 'end', align: 'right' }
-                }, 
-                scales: { x: { beginAtZero: true, grid: { color: '#f1f5f9' } } } 
-            }
+            data: { labels: dataKecamatan.labels, datasets: [{ data: dataKecamatan.values, backgroundColor: ['rgba(139, 92, 246, 0.8)', 'rgba(236, 72, 153, 0.8)', 'rgba(244, 63, 94, 0.8)', 'rgba(14, 165, 233, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(234, 179, 8, 0.8)'], borderRadius: 4, }] },
+            options: { layout: { padding: { right: 35 } }, responsive: true, indexAxis: 'y', plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'right' } }, scales: { x: { beginAtZero: true, grid: { color: '#f1f5f9' } } } }
         });
 
-        // 4. Chart Pendidikan (Bar)
         new Chart(document.getElementById('pendidikanChart'), {
             type: 'bar',
-            data: {
-                labels: dataPendidikan.labels,
-                datasets: [{
-                    label: 'Jumlah Klien',
-                    data: dataPendidikan.values,
-                    backgroundColor: ['rgba(99, 102, 241, 0.8)', 'rgba(168, 85, 247, 0.8)', 'rgba(236, 72, 153, 0.8)', 'rgba(244, 63, 94, 0.8)', 'rgba(249, 115, 22, 0.8)'],
-                    borderRadius: 4,
-                }]
-            },
-            options: { 
-                layout: { padding: { top: 25 } },
-                responsive: true, 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: { anchor: 'end', align: 'top' }
-                }, 
-                scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } } } 
-            }
+            data: { labels: dataPendidikan.labels, datasets: [{ data: dataPendidikan.values, backgroundColor: ['rgba(99, 102, 241, 0.8)', 'rgba(168, 85, 247, 0.8)', 'rgba(236, 72, 153, 0.8)', 'rgba(244, 63, 94, 0.8)', 'rgba(249, 115, 22, 0.8)'], borderRadius: 4 }] },
+            options: { layout: { padding: { top: 25 } }, responsive: true, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top' } }, scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } } } }
         });
 
-        // 5. Chart Desa/Kelurahan (Horizontal Bar)
         new Chart(document.getElementById('desaChart'), {
             type: 'bar',
-            data: {
-                labels: dataDesa.labels,
-                datasets: [{
-                    label: 'Jumlah Klien',
-                    data: dataDesa.values,
-                    backgroundColor: [
-                        'rgba(30, 58, 138, 0.85)',  
-                        'rgba(37, 99, 235, 0.85)',  
-                        'rgba(71, 85, 105, 0.85)',  
-                        'rgba(56, 189, 248, 0.85)', 
-                        'rgba(100, 116, 139, 0.85)',
-                        'rgba(148, 163, 184, 0.85)' 
-                    ],
-                    borderRadius: 4,
-                }]
-            },
-            options: { 
-                layout: { padding: { right: 35 } },
-                responsive: true, 
-                indexAxis: 'y', 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: { anchor: 'end', align: 'right' }
-                }, 
-                scales: { x: { beginAtZero: true, grid: { color: '#f1f5f9' } } } 
-            }
+            data: { labels: dataDesa.labels, datasets: [{ data: dataDesa.values, backgroundColor: ['rgba(30, 58, 138, 0.85)', 'rgba(37, 99, 235, 0.85)', 'rgba(71, 85, 105, 0.85)', 'rgba(56, 189, 248, 0.85)', 'rgba(100, 116, 139, 0.85)', 'rgba(148, 163, 184, 0.85)'], borderRadius: 4 }] },
+            options: { layout: { padding: { right: 35 } }, responsive: true, indexAxis: 'y', plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'right' } }, scales: { x: { beginAtZero: true, grid: { color: '#f1f5f9' } } } }
         });
 
-        // 6. Chart Pekerjaan (Horizontal Bar)
         new Chart(document.getElementById('pekerjaanChart'), {
             type: 'bar',
-            data: {
-                labels: dataPekerjaan.labels,
-                datasets: [{
-                    label: 'Jumlah Klien',
-                    data: dataPekerjaan.values,
-                    backgroundColor: [
-                        'rgba(15, 23, 42, 0.85)',   
-                        'rgba(67, 56, 202, 0.85)',  
-                        'rgba(15, 118, 110, 0.85)', 
-                        'rgba(51, 65, 85, 0.85)',   
-                        'rgba(99, 102, 241, 0.85)', 
-                        'rgba(107, 114, 128, 0.85)' 
-                    ],
-                    borderRadius: 4,
-                }]
-            },
-            options: { 
-                layout: { padding: { right: 35 } },
-                responsive: true, 
-                indexAxis: 'y', 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: { anchor: 'end', align: 'right' }
-                }, 
-                scales: { x: { beginAtZero: true, grid: { color: '#f1f5f9' } } } 
-            }
+            data: { labels: dataPekerjaan.labels, datasets: [{ data: dataPekerjaan.values, backgroundColor: ['rgba(15, 23, 42, 0.85)', 'rgba(67, 56, 202, 0.85)', 'rgba(15, 118, 110, 0.85)', 'rgba(51, 65, 85, 0.85)', 'rgba(99, 102, 241, 0.85)', 'rgba(107, 114, 128, 0.85)'], borderRadius: 4 }] },
+            options: { layout: { padding: { right: 35 } }, responsive: true, indexAxis: 'y', plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'right' } }, scales: { x: { beginAtZero: true, grid: { color: '#f1f5f9' } } } }
         });
 
-        // 7. Chart Distribusi Gender (Doughnut)
         new Chart(document.getElementById('genderChart'), {
             type: 'doughnut',
-            data: {
-                labels: ['Laki-laki', 'Perempuan'],
-                datasets: [{
-                    data: [1085, 160],
-                    backgroundColor: ['#3b82f6', '#ec4899'],
-                    borderWidth: 0,
-                    hoverOffset: 4
-                }]
-            },
-            options: { 
-                responsive: true, 
-                cutout: '70%', 
-                plugins: { 
-                    legend: { position: 'bottom' },
-                    datalabels: { color: '#ffffff', anchor: 'center', align: 'center', font: { size: 14 } }
-                } 
-            }
+            data: { labels: ['Laki-laki', 'Perempuan'], datasets: [{ data: [1085, 160], backgroundColor: ['#3b82f6', '#ec4899'], borderWidth: 0, hoverOffset: 4 }] },
+            options: { responsive: true, cutout: '70%', plugins: { legend: { position: 'bottom' }, datalabels: { color: '#ffffff', anchor: 'center', align: 'center', font: { size: 14 } } } }
         });
 
-        // 8. Chart Kelompok Usia (Pie)
         new Chart(document.getElementById('usiaChart'), {
             type: 'pie',
-            data: {
-                labels: ['ABH (<18)', 'Dewasa Muda (18-30)', 'Dewasa (31-50)', 'Lansia (>50)'],
-                datasets: [{
-                    data: [85, 520, 490, 150],
-                    backgroundColor: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'],
-                    borderWidth: 0,
-                    hoverOffset: 4
-                }]
-            },
-            options: { 
-                responsive: true, 
-                plugins: { 
-                    legend: { position: 'bottom' },
-                    datalabels: { color: '#ffffff', anchor: 'center', align: 'center', font: { size: 14 } }
-                } 
-            }
+            data: { labels: ['ABH (<18)', 'Dewasa Muda (18-30)', 'Dewasa (31-50)', 'Lansia (>50)'], datasets: [{ data: [85, 520, 490, 150], backgroundColor: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'], borderWidth: 0, hoverOffset: 4 }] },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' }, datalabels: { color: '#ffffff', anchor: 'center', align: 'center', font: { size: 14 } } } }
         });
 
-        // 9. Chart Tren Penerimaan (Line)
         new Chart(document.getElementById('trenChart'), {
             type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt'],
-                datasets: [{
-                    label: 'Klien Masuk',
-                    data: [0,0,0,0,157,278,268,227,254, 210],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    pointBackgroundColor: ['#ef4444', '#f97316', '#f59e0b', '#10b981', '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#f43f5e', '#14b8a6'],
-                    pointBorderColor: '#ffffff',
-                    pointBorderWidth: 2,
-                    pointRadius: 6,
-                    pointHoverRadius: 8,
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: { 
-                layout: { padding: { top: 25 } },
-                responsive: true, 
-                plugins: { 
-                    legend: { display: false },
-                    datalabels: { anchor: 'end', align: 'top', offset: 4 }
-                }, 
-                scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } } } 
-            }
+            data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'], datasets: [{ label: 'Klien Masuk', data: [0,0,0,0,157,278,268,227,254, 210, 245, 230], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', pointBackgroundColor: ['#ef4444', '#f97316', '#f59e0b', '#10b981', '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#f43f5e', '#14b8a6', '#0ea5e9', '#84cc16'], pointBorderColor: '#ffffff', pointBorderWidth: 2, pointRadius: 6, pointHoverRadius: 8, borderWidth: 3, fill: true, tension: 0.4 }] },
+            options: { layout: { padding: { top: 25 } }, responsive: true, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top', offset: 4 } }, scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } } } }
         });
-
-        // Fungsi Ekspor ke PDF
-        function exportPDF() {
-            const element = document.getElementById('dashboard-content');
-            const editableElements = document.querySelectorAll('[contenteditable="true"]');
-            editableElements.forEach(el => el.blur());
-
-            const opt = {
-                margin:       0.2,
-                filename:     'Dashboard_Demografi_Klien.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
-            };
-            html2pdf().set(opt).from(element).save();
-        }
     </script>
 </body>
 </html>
